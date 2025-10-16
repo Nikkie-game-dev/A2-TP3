@@ -1,6 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
+using Godot;
 
 namespace a2tp3.scripts;
 
@@ -10,33 +10,30 @@ public enum Order
     Increasing
 }
 
-public static class SortingAlgorithms<T> where T : IComparable, IEnumerable<T>
+public class SortingAlgorithms<T>()
+    where T : IComparable, new()
 {
-    
-    public static void Bitonic(T[] array, Order order)
+    public void DoBitonic(ref T[] array, Order order)
     {
         CheckEmptyOrNull(array);
-        var rcos = new Rco<T>[array.Length / 2];
         
-        for (int i = 0, j = 0; i < rcos.Length; ++i)
+        var k = MathF.Log2(array.Length);
+        if (!Mathf.IsEqualApprox(k - (int)k, 0f))
         {
-            rcos[i].X = array[j];
-            rcos[i].Y = array[j + i];
-            j += 2;
+            // add padding with inf 
+            for (int i = 0; i < Mathf.Pow(2, (int) k + 1); i++)
+            {
+                array = array.Append(new T()).ToArray();
+            }
         }
 
-        while (!Rco<T>.IsOrdered(rcos, order))
-        {
-            Parallel.ForEach(rcos, rco => rco.Sort(order));
-            Rco<T>.Join(rcos);
-        }
-        
-        Rco<T>.Extract(rcos, array);
+        var bitonic = new Bitonic<T>();
+        bitonic.Sort(ref array, order == Order.Increasing);
     }
 
-    private static void CheckEmptyOrNull(T[] array)
+    private static void CheckEmptyOrNull(T[] list)
     {
-        if (array == null || array.Length == 0) throw new EmptyArray();
+        if (list == null || list.Length == 0) throw new EmptyArray();
     }
     
 }
