@@ -1,0 +1,66 @@
+[gd_scene load_steps=3 format=3 uid="uid://erd0vsoepj7i"]
+
+[ext_resource type="Script" uid="uid://cqsp5m80rn6yv" path="res://scripts/Sorter.cs" id="1_q3rq2"]
+[ext_resource type="PackedScene" uid="uid://bvmhpxsewaxk6" path="res://scenes/bar.tscn" id="2_6pqpu"]
+
+[node name="Sorting" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q3rq2")
+_barsAmount = 8
+_maxValue = 400
+_minValue = 1
+_bar = ExtResource("2_6pqpu")
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08767361
+anchor_top = 0.8256173
+anchor_right = 0.9184028
+anchor_bottom = 0.92746913
+grow_horizontal = 2
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="GenerateButtons" type="HBoxContainer" parent="Buttons"]
+layout_mode = 2
+
+[node name="Generate" type="Button" parent="Buttons/GenerateButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Generate Bars"
+
+[node name="IsIncremental" type="CheckButton" parent="Buttons/GenerateButtons"]
+layout_mode = 2
+text = "Incremental
+"
+
+[node name="Algorithms1" type="HBoxContainer" parent="Buttons"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Bitonic" type="Button" parent="Buttons/Algorithms1"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Bitonic"
+
+[node name="Selection" type="Button" parent="Buttons/Algorithms1"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Selection"
+
+[node name="Bubble" type="Button" parent="Buttons/Algorithms1"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Bubble"
+
+[connection signal="pressed" from="Buttons/GenerateButtons/Generate" to="." method="OnGeneratePressed"]
+[connection signal="pressed" from="Buttons/GenerateButtons/IsIncremental" to="." method="OnIsIncrementalPressed"]
+[connection signal="pressed" from="Buttons/Algorithms1/Bitonic" to="." method="OnButtonPressed" binds= [0]]
+[connection signal="pressed" from="Buttons/Algorithms1/Selection" to="." method="OnButtonPressed" binds= [1]]
+[connection signal="pressed" from="Buttons/Algorithms1/Bubble" to="." method="OnButtonPressed" binds= [2]]

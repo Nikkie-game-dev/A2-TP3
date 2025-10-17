@@ -27,4 +27,7 @@ public interface ISortable <T> where T : IComparable
 
         return true;
     }
+    
+    public static void Swap(T[] array, int i, int j) => (array[i], array[j]) = (array[j], array[i]);
+    
 }

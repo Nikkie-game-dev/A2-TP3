@@ -14,7 +14,7 @@ public partial class Sorter() : Control
     [Export] private PackedScene _bar;
 
     private Bar[] _bars;
-    private bool _isIncremental;
+    private bool _isIncremental = true;
 
     public override void _Ready()
     {
@@ -25,6 +25,7 @@ public partial class Sorter() : Control
     {
         Bitonic = 0,
         Selection,
+        Bubble,
         Last
     }
 
@@ -56,6 +57,7 @@ public partial class Sorter() : Control
         {
             Algorithms.Bitonic => new Bitonic<Bar>(ref _bars),
             Algorithms.Selection => new Selection<Bar>(),
+            Algorithms.Bubble => new Bubble<Bar>(),
             
             _ => throw new ArgumentOutOfRangeException(nameof(algorithm), algorithm,
                 $"This error means that an unexpected value was passed when a button was pressed." +

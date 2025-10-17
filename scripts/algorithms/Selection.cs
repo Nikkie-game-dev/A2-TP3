@@ -2,6 +2,7 @@ using System;
 
 namespace a2tp3.scripts.algorithms;
 
+// Because it's a double linear loop: O(n^2)
 public class Selection<T> : ISortable<T> where T : IComparable, new()
 {
     public void Sort(ref T[] array, bool isIncremental)
@@ -12,7 +13,7 @@ public class Selection<T> : ISortable<T> where T : IComparable, new()
             {
                 var smallestPos = FindSmallestPos(array, i);
 
-                (array[i], array[smallestPos]) = (array[smallestPos], array[i]);
+                ISortable<T>.Swap(array, i, smallestPos);
             }
         }
         else
@@ -20,12 +21,10 @@ public class Selection<T> : ISortable<T> where T : IComparable, new()
             for (var i = 0; i < array.Length; i++)
             {
                 var biggestPos = FindBiggestPos(array, i);
-
-                (array[i], array[biggestPos]) = (array[biggestPos], array[i]);
+                ISortable<T>.Swap(array, i, biggestPos);
             }
         }
     }
-
     private static int FindSmallestPos(T[] array, int start)
     {
         var smallest = start;
@@ -43,16 +42,16 @@ public class Selection<T> : ISortable<T> where T : IComparable, new()
     
     private static int FindBiggestPos(T[] array, int start)
     {
-        var smallest = start;
+        var biggest = start;
 
-        for (var i = smallest; i < array.Length; i++)
+        for (var i = biggest; i < array.Length; i++)
         {
-            if (array[i].CompareTo(array[smallest]) < 0)
+            if (array[i].CompareTo(array[biggest]) < 0)
             {
-                smallest = i;
+                biggest = i;
             }
         }
 
-        return smallest;
+        return biggest;
     }
 }

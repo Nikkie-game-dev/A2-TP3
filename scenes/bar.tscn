@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvmhpxsewaxk6"]
+
+[ext_resource type="Script" uid="uid://djftlbk4ib0kt" path="res://scripts/Bar.cs" id="1_5dekh"]
+[ext_resource type="Texture2D" uid="uid://jh4mqxr1vq1f" path="res://icon.svg" id="2_bwlfd"]
+
+[node name="Bar" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 6.0
+offset_right = 54.0
+offset_bottom = 647.0
+script = ExtResource("1_5dekh")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bwlfd")
+expand_mode = 1
