@@ -1,5 +1,7 @@
 // 12/10/2025 - a2-tp3
 
+using System;
+using a2tp3.scripts.algorithms;
 using Godot;
 
 namespace a2tp3.scripts;
@@ -10,11 +12,21 @@ public partial class Sorter() : Control
     [Export] private int _maxValue;
     [Export] private int _minValue;
     [Export] private PackedScene _bar;
-    [Export] private Order _order;
-    
-    private Bar[] _bars;
-    private readonly SortingAlgorithms<Bar> _algorithms = new();
 
+    private Bar[] _bars;
+    private bool _isIncremental;
+
+    public override void _Ready()
+    {
+        GetViewport().SizeChanged += Reorder;
+    }
+
+    private enum Algorithms
+    {
+        Bitonic = 0,
+        Selection,
+        Last
+    }
 
     private void OnGeneratePressed()
     {
@@ -34,21 +46,37 @@ public partial class Sorter() : Control
             AddChild(bar);
             _bars[i] = bar;
         }
-        
-        
     }
 
-    private void OnBitonicPressed()
+    private void OnButtonPressed(int algorithm)
     {
-        if (_algorithms == null || _bars == null) return;
-        
-        _algorithms.DoBitonic(ref _bars, _order);
+        if (_bars == null) return;
+
+        ISortable<Bar> sortingMethod = (Algorithms) algorithm switch
+        {
+            Algorithms.Bitonic => new Bitonic<Bar>(ref _bars),
+            Algorithms.Selection => new Selection<Bar>(),
+            
+            _ => throw new ArgumentOutOfRangeException(nameof(algorithm), algorithm,
+                $"This error means that an unexpected value was passed when a button was pressed." +
+                $" Received value: {algorithm}. Expected value within {Algorithms.Bitonic} and {Algorithms.Last - 1} " +
+                $"(inclusive)")
+        };
+
+        sortingMethod.Sort(ref _bars, _isIncremental);
 
         Reorder();
     }
 
+    private void OnIsIncrementalPressed()
+    {
+        _isIncremental = !_isIncremental;
+    }
+    
     private void Reorder()
     {
+        if (_bars == null) return;
+        
         var x = GetViewportRect().End.X / _barsAmount;
 
         for (var i = 0; i < _bars.Length; i++)
