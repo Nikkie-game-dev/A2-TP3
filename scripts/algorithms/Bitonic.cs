@@ -1,11 +1,27 @@
 // 12/10/2025 - a2-tp3
 
 using System;
+using System.Linq;
+using Godot;
 
-namespace a2tp3.scripts;
+namespace a2tp3.scripts.algorithms;
 
 public class Bitonic<T> : ISortable<T> where T : IComparable, new()
 {
+
+    public Bitonic(ref T[] array)
+    {
+        var k = MathF.Log2(array.Length);
+        
+        if (Mathf.IsEqualApprox(k - (int)k, 0f)) return;
+        
+        // add padding with inf 
+        for (int i = 0; i < Mathf.Pow(2, (int)k + 1); i++)
+        {
+            array = array.Append(new T()).ToArray();
+        }
+    }
+    
     public void Sort(ref T[] array, bool isIncremental)
     {
         var groupSize = array.Length / 2;
@@ -70,31 +86,5 @@ public class Bitonic<T> : ISortable<T> where T : IComparable, new()
                     break;
             }
         }
-    }
-
-
-    public static bool IsOrdered(T[] array, Order order)
-    {
-        switch (order)
-        {
-            case Order.Decreasing:
-                for (var i = 0; i < array.Length - 1; i++)
-                {
-                    if (array[i].CompareTo(array[i + 1]) > 0) return false;
-                }
-
-                break;
-            case Order.Increasing:
-                for (var i = 0; i < array.Length - 1; i++)
-                {
-                    if (array[i].CompareTo(array[i + 1]) <= 0) return false;
-                }
-
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(order), order, null);
-        }
-
-        return true;
     }
 }

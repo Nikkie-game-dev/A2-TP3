@@ -26,6 +26,7 @@ public partial class Sorter() : Control
         Bitonic = 0,
         Selection,
         Bubble,
+        Cocktail,
         Last
     }
 
@@ -43,7 +44,7 @@ public partial class Sorter() : Control
         {
             var bar = (Bar)_bar.Instantiate();
             bar.Val = GD.RandRange(_minValue, _maxValue);
-            bar.Position = new Vector2(i * x, bar.Position.Y);
+            bar.Position = new Vector2(i * x + 10, bar.Position.Y);
             AddChild(bar);
             _bars[i] = bar;
         }
@@ -58,6 +59,7 @@ public partial class Sorter() : Control
             Algorithms.Bitonic => new Bitonic<Bar>(ref _bars),
             Algorithms.Selection => new Selection<Bar>(),
             Algorithms.Bubble => new Bubble<Bar>(),
+            Algorithms.Cocktail => new Cocktail<Bar>(),
             
             _ => throw new ArgumentOutOfRangeException(nameof(algorithm), algorithm,
                 $"This error means that an unexpected value was passed when a button was pressed." +
@@ -83,7 +85,7 @@ public partial class Sorter() : Control
 
         for (var i = 0; i < _bars.Length; i++)
         {
-            _bars[i].Position = new Vector2(i * x, _bars[i].Position.Y);
+            _bars[i].Position = new Vector2(i * x + 10, _bars[i].Position.Y);
         }
     }
 }

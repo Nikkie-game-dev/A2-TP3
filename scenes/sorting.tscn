@@ -37,6 +37,7 @@ text = "Generate Bars"
 
 [node name="IsIncremental" type="CheckButton" parent="Buttons/GenerateButtons"]
 layout_mode = 2
+button_pressed = true
 text = "Incremental
 "
 
@@ -59,8 +60,14 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Bubble"
 
+[node name="Cocktail" type="Button" parent="Buttons/Algorithms1"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cocktail"
+
 [connection signal="pressed" from="Buttons/GenerateButtons/Generate" to="." method="OnGeneratePressed"]
 [connection signal="pressed" from="Buttons/GenerateButtons/IsIncremental" to="." method="OnIsIncrementalPressed"]
 [connection signal="pressed" from="Buttons/Algorithms1/Bitonic" to="." method="OnButtonPressed" binds= [0]]
 [connection signal="pressed" from="Buttons/Algorithms1/Selection" to="." method="OnButtonPressed" binds= [1]]
 [connection signal="pressed" from="Buttons/Algorithms1/Bubble" to="." method="OnButtonPressed" binds= [2]]
+[connection signal="pressed" from="Buttons/Algorithms1/Cocktail" to="." method="OnButtonPressed" binds= [3]]
