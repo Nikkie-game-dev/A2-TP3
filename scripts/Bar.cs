@@ -3,26 +3,10 @@ using Godot;
 
 namespace a2tp3.scripts;
 
-public partial class Bar : Control, IComparable
+public partial class Bar() : Control, IComparable, INumericValue<int>
 {
-
-    
     [Export] private int _val ;
-    public int Val
-    {
-        get => _val;
-        set
-        {
-            _val = value;
-            Size = new Vector2(Size.X, _val);
-        }
-    }
-
-    public Bar()
-    {
-        
-    }
-
+    
     public int CompareTo(object obj)
     {
         if (obj == null) return 1;
@@ -31,7 +15,13 @@ public partial class Bar : Control, IComparable
         
         if (other == null) throw new ArgumentException();
 
-        return other.Val - _val;
+        return other.GetValue() - _val;
     }
-    
+
+    public int GetValue() => _val;
+    public void SetValue(int value)
+    {
+        _val = value;
+        Size = new Vector2(Size.X, _val);
+    }
 }

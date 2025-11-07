@@ -14,6 +14,8 @@ public enum Algorithms
     Bogo,
     Insertion,
     Shell,
+    Lsd,
+    Msd,
     Last
 }
 

@@ -22,7 +22,6 @@ public partial class Sorter() : Control
     }
 
 
-
     private void OnGeneratePressed()
     {
         _bars ??= new Bar[_barsAmount];
@@ -36,7 +35,7 @@ public partial class Sorter() : Control
         for (var i = 0; i < _barsAmount; i++)
         {
             var bar = (Bar)_bar.Instantiate();
-            bar.Val = GD.RandRange(_minValue, _maxValue);
+            bar.SetValue(GD.RandRange(_minValue, _maxValue));
             bar.Position = new Vector2(i * x + 10, bar.Position.Y);
             AddChild(bar);
             _bars[i] = bar;
@@ -57,7 +56,8 @@ public partial class Sorter() : Control
             Algorithms.Bogo => new Bogo<Bar>(),
             Algorithms.Insertion => new Insertion<Bar>(),
             Algorithms.Shell => new Shell<Bar>(),
-            
+            Algorithms.Lsd => new Radix<Bar>(true),
+            Algorithms.Msd => new Radix<Bar>(false),
             _ => throw new ArgumentOutOfRangeException(nameof(algorithm), algorithm,
                 $"This error means that an unexpected value was passed when a button was pressed." +
                 $" Received value: {algorithm}. Expected value within {Algorithms.Bitonic} and {Algorithms.Last - 1} " +
@@ -73,11 +73,11 @@ public partial class Sorter() : Control
     {
         _isIncremental = !_isIncremental;
     }
-    
+
     private void Reorder()
     {
         if (_bars == null) return;
-        
+
         var x = GetViewportRect().End.X / _barsAmount;
 
         for (var i = 0; i < _bars.Length; i++)

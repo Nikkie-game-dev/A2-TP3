@@ -115,21 +115,20 @@ script = ExtResource("3_qsmfp")
 _selected = 7
 _sorter = NodePath("../../..")
 
-[node name="Cocktail" type="Button" parent="Buttons/Algorithms2" node_paths=PackedStringArray("_sorter")]
-visible = false
+[node name="LSD" type="Button" parent="Buttons/Algorithms2" node_paths=PackedStringArray("_sorter")]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Cocktail"
+text = "Radix LSD"
 script = ExtResource("3_qsmfp")
+_selected = 8
 _sorter = NodePath("../../..")
 
-[node name="Quick" type="Button" parent="Buttons/Algorithms2" node_paths=PackedStringArray("_sorter")]
-visible = false
+[node name="MSD" type="Button" parent="Buttons/Algorithms2" node_paths=PackedStringArray("_sorter")]
 layout_mode = 2
 size_flags_horizontal = 3
-disabled = true
-text = "Quick"
+text = "Radix MSD"
 script = ExtResource("3_qsmfp")
+_selected = 9
 _sorter = NodePath("../../..")
 
 [connection signal="pressed" from="Buttons/GenerateButtons/Generate" to="." method="OnGeneratePressed"]
@@ -142,5 +141,5 @@ _sorter = NodePath("../../..")
 [connection signal="pressed" from="Buttons/Algorithms2/Bogo" to="Buttons/Algorithms2/Bogo" method="OnButtonPressed"]
 [connection signal="pressed" from="Buttons/Algorithms2/Insertion" to="Buttons/Algorithms2/Insertion" method="OnButtonPressed"]
 [connection signal="pressed" from="Buttons/Algorithms2/Shell" to="Buttons/Algorithms2/Shell" method="OnButtonPressed"]
-[connection signal="pressed" from="Buttons/Algorithms2/Cocktail" to="Buttons/Algorithms2/Cocktail" method="OnButtonPressed"]
-[connection signal="pressed" from="Buttons/Algorithms2/Quick" to="Buttons/Algorithms2/Quick" method="OnButtonPressed"]
+[connection signal="pressed" from="Buttons/Algorithms2/LSD" to="Buttons/Algorithms2/LSD" method="OnButtonPressed"]
+[connection signal="pressed" from="Buttons/Algorithms2/MSD" to="Buttons/Algorithms2/MSD" method="OnButtonPressed"]
