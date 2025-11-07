@@ -12,7 +12,6 @@ public class Selection<T> : ISortable<T> where T : IComparable, new()
             for (var i = 0; i < array.Length; i++)
             {
                 var smallestPos = FindSmallestPos(array, i);
-
                 ISortable<T>.Swap(array, i, smallestPos);
             }
         }

@@ -21,14 +21,7 @@ public partial class Sorter() : Control
         GetViewport().SizeChanged += Reorder;
     }
 
-    private enum Algorithms
-    {
-        Bitonic = 0,
-        Selection,
-        Bubble,
-        Cocktail,
-        Last
-    }
+
 
     private void OnGeneratePressed()
     {
@@ -50,16 +43,20 @@ public partial class Sorter() : Control
         }
     }
 
-    private void OnButtonPressed(int algorithm)
+    public void OnButtonPressed(Algorithms algorithm)
     {
         if (_bars == null) return;
 
-        ISortable<Bar> sortingMethod = (Algorithms) algorithm switch
+        ISortable<Bar> sortingMethod = algorithm switch
         {
             Algorithms.Bitonic => new Bitonic<Bar>(ref _bars),
             Algorithms.Selection => new Selection<Bar>(),
             Algorithms.Bubble => new Bubble<Bar>(),
             Algorithms.Cocktail => new Cocktail<Bar>(),
+            Algorithms.Quick => new Quick<Bar>(),
+            Algorithms.Bogo => new Bogo<Bar>(),
+            Algorithms.Insertion => new Insertion<Bar>(),
+            Algorithms.Shell => new Shell<Bar>(),
             
             _ => throw new ArgumentOutOfRangeException(nameof(algorithm), algorithm,
                 $"This error means that an unexpected value was passed when a button was pressed." +

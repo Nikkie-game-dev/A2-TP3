@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://erd0vsoepj7i"]
+[gd_scene load_steps=4 format=3 uid="uid://erd0vsoepj7i"]
 
 [ext_resource type="Script" uid="uid://cqsp5m80rn6yv" path="res://scripts/Sorter.cs" id="1_q3rq2"]
 [ext_resource type="PackedScene" uid="uid://bvmhpxsewaxk6" path="res://scenes/bar.tscn" id="2_6pqpu"]
+[ext_resource type="Script" uid="uid://crrkdnnwhbnew" path="res://scripts/Button.cs" id="3_qsmfp"]
 
 [node name="Sorting" type="Control"]
 layout_mode = 3
@@ -45,29 +46,101 @@ text = "Incremental
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Bitonic" type="Button" parent="Buttons/Algorithms1"]
+[node name="Bitonic" type="Button" parent="Buttons/Algorithms1" node_paths=PackedStringArray("_sorter")]
 layout_mode = 2
 size_flags_horizontal = 3
+disabled = true
 text = "Bitonic"
+script = ExtResource("3_qsmfp")
+_sorter = NodePath("../../..")
 
-[node name="Selection" type="Button" parent="Buttons/Algorithms1"]
+[node name="Selection" type="Button" parent="Buttons/Algorithms1" node_paths=PackedStringArray("_sorter")]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Selection"
+script = ExtResource("3_qsmfp")
+_selected = 1
+_sorter = NodePath("../../..")
 
-[node name="Bubble" type="Button" parent="Buttons/Algorithms1"]
+[node name="Bubble" type="Button" parent="Buttons/Algorithms1" node_paths=PackedStringArray("_sorter")]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Bubble"
+script = ExtResource("3_qsmfp")
+_selected = 2
+_sorter = NodePath("../../..")
 
-[node name="Cocktail" type="Button" parent="Buttons/Algorithms1"]
+[node name="Cocktail" type="Button" parent="Buttons/Algorithms1" node_paths=PackedStringArray("_sorter")]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Cocktail"
+script = ExtResource("3_qsmfp")
+_selected = 3
+_sorter = NodePath("../../..")
+
+[node name="Quick" type="Button" parent="Buttons/Algorithms1" node_paths=PackedStringArray("_sorter")]
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "Quick"
+script = ExtResource("3_qsmfp")
+_selected = 4
+_sorter = NodePath("../../..")
+
+[node name="Algorithms2" type="HBoxContainer" parent="Buttons"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Bogo" type="Button" parent="Buttons/Algorithms2" node_paths=PackedStringArray("_sorter")]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Bogo"
+script = ExtResource("3_qsmfp")
+_selected = 5
+_sorter = NodePath("../../..")
+
+[node name="Insertion" type="Button" parent="Buttons/Algorithms2" node_paths=PackedStringArray("_sorter")]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Insertion"
+script = ExtResource("3_qsmfp")
+_selected = 6
+_sorter = NodePath("../../..")
+
+[node name="Shell" type="Button" parent="Buttons/Algorithms2" node_paths=PackedStringArray("_sorter")]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Shell"
+script = ExtResource("3_qsmfp")
+_selected = 7
+_sorter = NodePath("../../..")
+
+[node name="Cocktail" type="Button" parent="Buttons/Algorithms2" node_paths=PackedStringArray("_sorter")]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cocktail"
+script = ExtResource("3_qsmfp")
+_sorter = NodePath("../../..")
+
+[node name="Quick" type="Button" parent="Buttons/Algorithms2" node_paths=PackedStringArray("_sorter")]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "Quick"
+script = ExtResource("3_qsmfp")
+_sorter = NodePath("../../..")
 
 [connection signal="pressed" from="Buttons/GenerateButtons/Generate" to="." method="OnGeneratePressed"]
 [connection signal="pressed" from="Buttons/GenerateButtons/IsIncremental" to="." method="OnIsIncrementalPressed"]
-[connection signal="pressed" from="Buttons/Algorithms1/Bitonic" to="." method="OnButtonPressed" binds= [0]]
-[connection signal="pressed" from="Buttons/Algorithms1/Selection" to="." method="OnButtonPressed" binds= [1]]
-[connection signal="pressed" from="Buttons/Algorithms1/Bubble" to="." method="OnButtonPressed" binds= [2]]
-[connection signal="pressed" from="Buttons/Algorithms1/Cocktail" to="." method="OnButtonPressed" binds= [3]]
+[connection signal="pressed" from="Buttons/Algorithms1/Bitonic" to="Buttons/Algorithms1/Bitonic" method="OnButtonPressed"]
+[connection signal="pressed" from="Buttons/Algorithms1/Selection" to="Buttons/Algorithms1/Selection" method="OnButtonPressed"]
+[connection signal="pressed" from="Buttons/Algorithms1/Bubble" to="Buttons/Algorithms1/Bubble" method="OnButtonPressed"]
+[connection signal="pressed" from="Buttons/Algorithms1/Cocktail" to="Buttons/Algorithms1/Cocktail" method="OnButtonPressed"]
+[connection signal="pressed" from="Buttons/Algorithms1/Quick" to="Buttons/Algorithms1/Quick" method="OnButtonPressed"]
+[connection signal="pressed" from="Buttons/Algorithms2/Bogo" to="Buttons/Algorithms2/Bogo" method="OnButtonPressed"]
+[connection signal="pressed" from="Buttons/Algorithms2/Insertion" to="Buttons/Algorithms2/Insertion" method="OnButtonPressed"]
+[connection signal="pressed" from="Buttons/Algorithms2/Shell" to="Buttons/Algorithms2/Shell" method="OnButtonPressed"]
+[connection signal="pressed" from="Buttons/Algorithms2/Cocktail" to="Buttons/Algorithms2/Cocktail" method="OnButtonPressed"]
+[connection signal="pressed" from="Buttons/Algorithms2/Quick" to="Buttons/Algorithms2/Quick" method="OnButtonPressed"]
