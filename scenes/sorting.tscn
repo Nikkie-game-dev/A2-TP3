@@ -13,7 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_q3rq2")
 _barsAmount = 8
-_maxValue = 400
+_maxValue = 350
 _minValue = 1
 _bar = ExtResource("2_6pqpu")
 
@@ -126,6 +126,56 @@ _sorter = NodePath("../../..")
 [node name="MSD" type="Button" parent="Buttons/Algorithms2" node_paths=PackedStringArray("_sorter")]
 layout_mode = 2
 size_flags_horizontal = 3
+disabled = true
+text = "Radix MSD"
+script = ExtResource("3_qsmfp")
+_selected = 9
+_sorter = NodePath("../../..")
+
+[node name="Algorithms3" type="HBoxContainer" parent="Buttons"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Heap" type="Button" parent="Buttons/Algorithms3" node_paths=PackedStringArray("_sorter")]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Heap
+"
+script = ExtResource("3_qsmfp")
+_selected = 10
+_sorter = NodePath("../../..")
+
+[node name="Merge" type="Button" parent="Buttons/Algorithms3" node_paths=PackedStringArray("_sorter")]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Merge
+"
+script = ExtResource("3_qsmfp")
+_selected = 11
+_sorter = NodePath("../../..")
+
+[node name="Gnome" type="Button" parent="Buttons/Algorithms3" node_paths=PackedStringArray("_sorter")]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Gnome"
+script = ExtResource("3_qsmfp")
+_selected = 12
+_sorter = NodePath("../../..")
+
+[node name="LSD" type="Button" parent="Buttons/Algorithms3" node_paths=PackedStringArray("_sorter")]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Radix LSD"
+script = ExtResource("3_qsmfp")
+_selected = 8
+_sorter = NodePath("../../..")
+
+[node name="MSD" type="Button" parent="Buttons/Algorithms3" node_paths=PackedStringArray("_sorter")]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
 text = "Radix MSD"
 script = ExtResource("3_qsmfp")
 _selected = 9
@@ -143,3 +193,8 @@ _sorter = NodePath("../../..")
 [connection signal="pressed" from="Buttons/Algorithms2/Shell" to="Buttons/Algorithms2/Shell" method="OnButtonPressed"]
 [connection signal="pressed" from="Buttons/Algorithms2/LSD" to="Buttons/Algorithms2/LSD" method="OnButtonPressed"]
 [connection signal="pressed" from="Buttons/Algorithms2/MSD" to="Buttons/Algorithms2/MSD" method="OnButtonPressed"]
+[connection signal="pressed" from="Buttons/Algorithms3/Heap" to="Buttons/Algorithms3/Heap" method="OnButtonPressed"]
+[connection signal="pressed" from="Buttons/Algorithms3/Merge" to="Buttons/Algorithms3/Merge" method="OnButtonPressed"]
+[connection signal="pressed" from="Buttons/Algorithms3/Gnome" to="Buttons/Algorithms3/Gnome" method="OnButtonPressed"]
+[connection signal="pressed" from="Buttons/Algorithms3/LSD" to="Buttons/Algorithms3/LSD" method="OnButtonPressed"]
+[connection signal="pressed" from="Buttons/Algorithms3/MSD" to="Buttons/Algorithms3/MSD" method="OnButtonPressed"]

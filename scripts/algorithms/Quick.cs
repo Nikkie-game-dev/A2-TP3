@@ -7,13 +7,13 @@ namespace a2tp3.scripts.algorithms;
 
 public class Quick<T> : ISortable<T> where T : IComparable, new()
 {
-    public void Sort(ref T[] array, bool isIncremental)
+    public static void Sort(ref T[] array, bool isIncremental)
     {
         var pivotPosition = array.Length - 1;
         Sort(ref array, isIncremental, pivotPosition);
     }
 
-    private void Sort(ref T[] array, bool isIncremental, int pivot)
+    private static void Sort(ref T[] array, bool isIncremental, int pivot)
     {
         if (array.Length <= 1) return;
 

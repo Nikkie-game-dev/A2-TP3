@@ -22,7 +22,7 @@ public class Bitonic<T> : ISortable<T> where T : IComparable, new()
         }
     }
     
-    public void Sort(ref T[] array, bool isIncremental)
+    public static void Sort(ref T[] array, bool isIncremental)
     {
         var groupSize = array.Length / 2;
         Divide(array, groupSize, out var g1, out var g2);

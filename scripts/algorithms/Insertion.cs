@@ -4,9 +4,11 @@ using System;
 
 namespace a2tp3.scripts.algorithms;
 
+// f(n) = O(n^2) as worst case
+
 public class Insertion<T> : ISortable<T> where T : IComparable, new()
 {
-    public void Sort(ref T[] array, bool isIncremental)
+    public static void Sort(ref T[] array, bool isIncremental)
     {
         if (isIncremental)
         {

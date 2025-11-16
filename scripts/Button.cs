@@ -16,6 +16,9 @@ public enum Algorithms
     Shell,
     Lsd,
     Msd,
+    Heap,
+    Merge,
+    Gnome,
     Last
 }
 

@@ -1,6 +1,7 @@
 // 12/10/2025 - a2-tp3
 
 using System;
+using System.Collections.Generic;
 using a2tp3.scripts.algorithms;
 using Godot;
 
@@ -8,6 +9,8 @@ namespace a2tp3.scripts;
 
 public partial class Sorter() : Control
 {
+    private delegate void SortingAction<T1>(ref T1[] array, bool isIncremental);
+
     [Export] private int _barsAmount;
     [Export] private int _maxValue;
     [Export] private int _minValue;
@@ -15,6 +18,23 @@ public partial class Sorter() : Control
 
     private Bar[] _bars;
     private bool _isIncremental = true;
+    
+    private static readonly Dictionary<Algorithms, SortingAction<Bar>> Algorithms = new()
+    {
+        { scripts.Algorithms.Bitonic, Bitonic<Bar>.Sort },
+        { scripts.Algorithms.Selection, Selection<Bar>.Sort },
+        { scripts.Algorithms.Bubble, Bubble<Bar>.Sort },
+        { scripts.Algorithms.Cocktail, Cocktail<Bar>.Sort },
+        { scripts.Algorithms.Quick, Quick<Bar>.Sort },
+        { scripts.Algorithms.Bogo, Bogo<Bar>.Sort },
+        { scripts.Algorithms.Insertion, Insertion<Bar>.Sort },
+        { scripts.Algorithms.Shell, Shell<Bar>.Sort },
+        { scripts.Algorithms.Lsd, Lsd<Bar>.Sort },
+        { scripts.Algorithms.Msd, Msd<Bar>.Sort },
+        { scripts.Algorithms.Heap, Heap<Bar>.Sort },
+        { scripts.Algorithms.Merge, Merge<Bar>.Sort },
+        { scripts.Algorithms.Gnome, Gnome<Bar>.Sort }
+    };
 
     public override void _Ready()
     {
@@ -46,26 +66,17 @@ public partial class Sorter() : Control
     {
         if (_bars == null) return;
 
-        ISortable<Bar> sortingMethod = algorithm switch
+        if (Algorithms.TryGetValue(algorithm, out var sort))
         {
-            Algorithms.Bitonic => new Bitonic<Bar>(ref _bars),
-            Algorithms.Selection => new Selection<Bar>(),
-            Algorithms.Bubble => new Bubble<Bar>(),
-            Algorithms.Cocktail => new Cocktail<Bar>(),
-            Algorithms.Quick => new Quick<Bar>(),
-            Algorithms.Bogo => new Bogo<Bar>(),
-            Algorithms.Insertion => new Insertion<Bar>(),
-            Algorithms.Shell => new Shell<Bar>(),
-            Algorithms.Lsd => new Radix<Bar>(true),
-            Algorithms.Msd => new Radix<Bar>(false),
-            _ => throw new ArgumentOutOfRangeException(nameof(algorithm), algorithm,
+            sort(ref _bars, _isIncremental);
+        }
+        else
+        {
+            throw new ArgumentOutOfRangeException(nameof(algorithm), algorithm,
                 $"This error means that an unexpected value was passed when a button was pressed." +
-                $" Received value: {algorithm}. Expected value within {Algorithms.Bitonic} and {Algorithms.Last - 1} " +
-                $"(inclusive)")
-        };
-
-        sortingMethod.Sort(ref _bars, _isIncremental);
-
+                $" Received value: {algorithm}. Expected value within {scripts.Algorithms.Bitonic} and {scripts.Algorithms.Last - 1} " +
+                $"(inclusive)");
+        }
         Reorder();
     }
 

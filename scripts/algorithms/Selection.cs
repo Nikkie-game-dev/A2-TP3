@@ -5,7 +5,7 @@ namespace a2tp3.scripts.algorithms;
 // Because it's a double linear loop: O(n^2)
 public class Selection<T> : ISortable<T> where T : IComparable, new()
 {
-    public void Sort(ref T[] array, bool isIncremental)
+    public static void Sort(ref T[] array, bool isIncremental)
     {
         if (isIncremental)
         {

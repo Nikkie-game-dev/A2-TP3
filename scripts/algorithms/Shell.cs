@@ -6,7 +6,7 @@ namespace a2tp3.scripts.algorithms;
 
 public class Shell<T> : ISortable<T> where T : IComparable, new()
 {
-    public void Sort(ref T[] array, bool isIncremental)
+    public static void Sort(ref T[] array, bool isIncremental)
     {
         var k = 0;
         var gap = array.Length / (int)MathF.Pow(2, k); // original shell's gap

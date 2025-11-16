@@ -5,39 +5,10 @@ using Godot;
 
 namespace a2tp3.scripts.algorithms;
 
-public class Radix<T>(bool isLsd) : ISortable<T>
-    where T : IComparable, INumericValue<int>, new()
+public class Radix<T> where T : IComparable, INumericValue<int>, new()
 {
-    private bool _isLsd = isLsd;
-
-    public void Sort(ref T[] array, bool isIncremental)
-    {
-        if (_isLsd)
-        {
-            Lsd(ref array, isIncremental);
-        }
-        else
-        {
-            Msd(ref array, isIncremental);
-        }
-    }
-
-    private void Lsd(ref T[] array, bool isIncremental)
-    {
-        GetBiggest(array, out var biggestPos);
-
-        GetDigits(array, biggestPos, out var digits);
-
-        var currentDigit = 0;
-
-        while (digits > currentDigit)
-        {
-            Bubble(ref array, isIncremental, currentDigit);
-            currentDigit++;
-        }
-    }
-
-    private void Msd(ref T[] array, bool isIncremental)
+    
+    private static void Msd(ref T[] array, bool isIncremental)
     {
         GetBiggest(array, out var biggestPos);
 
@@ -50,7 +21,7 @@ public class Radix<T>(bool isLsd) : ISortable<T>
         }
     }
 
-    private static void GetDigits(T[] array, int biggestPos, out int digits)
+    protected static void GetDigits(T[] array, int biggestPos, out int digits)
     {
         digits = 0;
         var bar = array[biggestPos] as Bar;
@@ -68,7 +39,7 @@ public class Radix<T>(bool isLsd) : ISortable<T>
         ;
     }
 
-    private static void GetBiggest(T[] array, out int biggestPos)
+    protected static void GetBiggest(T[] array, out int biggestPos)
     {
         biggestPos = 0;
         for (var i = 0; i < array.Length; i++)
@@ -80,7 +51,7 @@ public class Radix<T>(bool isLsd) : ISortable<T>
         }
     }
 
-    private void Bubble(ref T[] array, bool isIncremental, int digits)
+    protected static void Bubble(ref T[] array, bool isIncremental, int digits)
     {
         bool hasChanged;
 
@@ -101,7 +72,7 @@ public class Radix<T>(bool isLsd) : ISortable<T>
 
                     if (significantDigitA <= significantDigitB) continue;
 
-                    if (!_isLsd)
+                    /*if (!_isLsd)
                     {
                         var priorDiv = divisor * 10;
                         
@@ -109,7 +80,7 @@ public class Radix<T>(bool isLsd) : ISortable<T>
                         var priorSignificantDigitB = (barB.GetValue() / priorDiv) % (priorDiv > 1 ? priorDiv : 10);
 
                         if (priorSignificantDigitA != priorSignificantDigitB) continue;
-                    }
+                    }*/
                     
                         
                     ISortable<T>.Swap(array, j, j + 1);
@@ -140,3 +111,31 @@ public class Radix<T>(bool isLsd) : ISortable<T>
         }
     }
 }
+
+public class Lsd<T> : Radix<T>, ISortable<T> where T : IComparable, INumericValue<int>, new()
+{
+    public static void Sort(ref T[] array, bool isIncremental)
+    {
+        GetBiggest(array, out var biggestPos);
+
+        GetDigits(array, biggestPos, out var digits);
+
+        var currentDigit = 0;
+
+        while (digits > currentDigit)
+        {
+            Bubble(ref array, isIncremental, currentDigit);
+            currentDigit++;
+        }
+    }
+}
+
+public class Msd<T> : Radix<T>, ISortable<T> where T : IComparable, INumericValue<int>, new()
+{
+    public static void Sort(ref T[] array, bool isIncremental)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+
