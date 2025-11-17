@@ -5,4 +5,7 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>a2tp3</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="BigO-Order.txt" />
+  </ItemGroup>
 </Project>

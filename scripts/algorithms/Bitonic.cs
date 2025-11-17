@@ -6,83 +6,56 @@ using Godot;
 
 namespace a2tp3.scripts.algorithms;
 
+// f(n) = O(log(n)) as worst case
 public class Bitonic<T> : ISortable<T> where T : IComparable, new()
 {
-
-    public Bitonic(ref T[] array)
-    {
-        var k = MathF.Log2(array.Length);
-        
-        if (Mathf.IsEqualApprox(k - (int)k, 0f)) return;
-        
-        // add padding with inf 
-        for (int i = 0; i < Mathf.Pow(2, (int)k + 1); i++)
-        {
-            array = array.Append(new T()).ToArray();
-        }
-    }
-    
     public static void Sort(ref T[] array, bool isIncremental)
     {
-        var groupSize = array.Length / 2;
-        Divide(array, groupSize, out var g1, out var g2);
+        var k = MathF.Log2(array.Length);
 
-        if (groupSize > 1)
+        if (!Mathf.IsEqualApprox(k - (int)k, 0f))
         {
-            Sort(ref g1, isIncremental);
-            Sort(ref g2, !isIncremental);
+            for (var i = 0; i < Mathf.Pow(2, (int)k + 1); i++)
+            {
+                array = array.Append(new T()).ToArray();
+            }
         }
+
+        BitonicSort(ref array, 0, array.Length, isIncremental);
+    }
+
+    private static void BitonicSort(ref T[] array, int start, int end, bool isIncremental)
+    {
+        var mid = end / 2;
+
+        if (mid <= 1) return;
         
-        CheckAndSwap(g1, g2, isIncremental);
-        array = Merge(g1, g2);
+        BitonicSort(ref array, start, mid, isIncremental);
+        BitonicSort(ref array, start + mid, end, !isIncremental);
 
+        Merge(ref array, start, end, isIncremental);
     }
 
-    private static void Divide(T[] array, int halfSize, out T[] g1, out T[] g2)
+    private static void Merge(ref T[] array, int start, int end, bool isIncremental)
     {
-        g1 = new T[halfSize];
-        g2 = new T[halfSize];
+        if (end - start <= 1) return;
+        var mid = end / 2;
 
+        CheckAndSwap(ref array, start, end, isIncremental);
 
-        for (var i = 0; i < halfSize; i++)
-        {
-            g1[i] = array[i];
-        }
-
-        for (var i = 0; i < halfSize; i++)
-        {
-            g2[i] = array[i + halfSize];
-        }
+        Merge(ref array, start, mid, isIncremental);
+        Merge(ref array, start + mid, end, isIncremental);
     }
 
-    private static T[] Merge(T[] g1, T[] g2)
+    private static void CheckAndSwap(ref T[] array, int start, int end, bool isIncremental)
     {
-        var array = new T[g1.Length + g2.Length];
-
-        for (var i = 0; i < g1.Length; i++)
-        {
-            array[i] = g1[i];
-        }
-
-        for (var i = 0; i < g2.Length; i++)
-        {
-            array[i + g1.Length] = g2[i];
-        }
-
-        return array;
-    }
-
-    private static void CheckAndSwap(T[] g1, T[] g2, bool isIncremental)
-    {
-        for (var i = 0; i < g1.Length; i++)
+        for (int i = start, j = end; i < end; i++)
         {
             switch (isIncremental)
             {
-                case true when g1[i].CompareTo(g2[i]) < 0:
-                    (g1[i], g2[i]) = (g2[i], g1[i]);
-                    break;
-                case false when g1[i].CompareTo(g2[i]) > 0:
-                    (g2[i], g1[i]) = (g1[i], g2[i]);
+                case true when array[i].CompareTo(array[j]) < 0:
+                case false when array[i].CompareTo(array[j]) > 0:
+                    (array[i], array[j]) = (array[j], array[i]);
                     break;
             }
         }

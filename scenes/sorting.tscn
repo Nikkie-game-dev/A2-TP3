@@ -161,13 +161,12 @@ script = ExtResource("3_qsmfp")
 _selected = 12
 _sorter = NodePath("../../..")
 
-[node name="LSD" type="Button" parent="Buttons/Algorithms3" node_paths=PackedStringArray("_sorter")]
-visible = false
+[node name="Intro" type="Button" parent="Buttons/Algorithms3" node_paths=PackedStringArray("_sorter")]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Radix LSD"
+text = "Intro"
 script = ExtResource("3_qsmfp")
-_selected = 8
+_selected = 13
 _sorter = NodePath("../../..")
 
 [node name="MSD" type="Button" parent="Buttons/Algorithms3" node_paths=PackedStringArray("_sorter")]
@@ -195,5 +194,5 @@ _sorter = NodePath("../../..")
 [connection signal="pressed" from="Buttons/Algorithms3/Heap" to="Buttons/Algorithms3/Heap" method="OnButtonPressed"]
 [connection signal="pressed" from="Buttons/Algorithms3/Merge" to="Buttons/Algorithms3/Merge" method="OnButtonPressed"]
 [connection signal="pressed" from="Buttons/Algorithms3/Gnome" to="Buttons/Algorithms3/Gnome" method="OnButtonPressed"]
-[connection signal="pressed" from="Buttons/Algorithms3/LSD" to="Buttons/Algorithms3/LSD" method="OnButtonPressed"]
+[connection signal="pressed" from="Buttons/Algorithms3/Intro" to="Buttons/Algorithms3/Intro" method="OnButtonPressed"]
 [connection signal="pressed" from="Buttons/Algorithms3/MSD" to="Buttons/Algorithms3/MSD" method="OnButtonPressed"]

@@ -7,6 +7,7 @@ using Godot;
 
 namespace a2tp3.scripts;
 
+
 public partial class Sorter() : Control
 {
     private delegate void SortingAction<T1>(ref T1[] array, bool isIncremental);
@@ -33,7 +34,8 @@ public partial class Sorter() : Control
         { scripts.Algorithms.Msd, Msd<Bar>.Sort },
         { scripts.Algorithms.Heap, Heap<Bar>.Sort },
         { scripts.Algorithms.Merge, Merge<Bar>.Sort },
-        { scripts.Algorithms.Gnome, Gnome<Bar>.Sort }
+        { scripts.Algorithms.Gnome, Gnome<Bar>.Sort },
+        { scripts.Algorithms.Intro, Intro<Bar>.Sort }
     };
 
     public override void _Ready()

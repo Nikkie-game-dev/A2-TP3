@@ -19,6 +19,7 @@ public enum Algorithms
     Heap,
     Merge,
     Gnome,
+    Intro,
     Last
 }
 

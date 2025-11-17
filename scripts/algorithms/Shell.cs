@@ -6,16 +6,19 @@ namespace a2tp3.scripts.algorithms;
 
 public class Shell<T> : ISortable<T> where T : IComparable, new()
 {
+    // f(n) = O(n log(n)) as best case
+    // f(n) = O(n^2) as worst case
+
     public static void Sort(ref T[] array, bool isIncremental)
     {
         var k = 0;
-        var gap = array.Length / (int)MathF.Pow(2, k); // original shell's gap
+        var gap = array.Length / (int)MathF.Pow(2, k); // original Shell's gap
 
         while (gap > 1)
         {
             k++;
             gap = array.Length / (int)MathF.Pow(2, k);
-            
+
             for (var i = 0; i < array.Length && i + gap < array.Length; i++)
             {
                 var isBigger = array[i].CompareTo(array[i + gap]) < 0;

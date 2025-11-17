@@ -1,0 +1,17 @@
+O(d * (n + b)):
+	Radix LSD
+	
+O(n log(n)):
+	Heap
+	Intro
+	Merge
+	
+O(n^2):
+	Bubble
+	Cocktail
+	Gnome
+	Insertion
+	Quick
+	Selection
+	Shell
+
