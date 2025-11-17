@@ -81,7 +81,6 @@ _sorter = NodePath("../../..")
 [node name="Quick" type="Button" parent="Buttons/Algorithms1" node_paths=PackedStringArray("_sorter")]
 layout_mode = 2
 size_flags_horizontal = 3
-disabled = true
 text = "Quick"
 script = ExtResource("3_qsmfp")
 _selected = 4

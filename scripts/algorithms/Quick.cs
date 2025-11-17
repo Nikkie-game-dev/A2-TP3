@@ -1,7 +1,6 @@
 // 17/10/2025 - a2-tp3
 
 using System;
-using System.Collections.Generic;
 
 namespace a2tp3.scripts.algorithms;
 
@@ -9,66 +8,32 @@ public class Quick<T> : ISortable<T> where T : IComparable, new()
 {
     public static void Sort(ref T[] array, bool isIncremental)
     {
-        var pivotPosition = array.Length - 1;
-        Sort(ref array, isIncremental, pivotPosition);
+        Sort(ref array, isIncremental, 0, array.Length - 1);
     }
 
-    private static void Sort(ref T[] array, bool isIncremental, int pivot)
+    private static void Sort(ref T[] array, bool isIncremental, int start, int end)
     {
-        if (array.Length <= 1) return;
-
-        var rightSide = new List<T>();
-        var leftSide = new List<T>();
-
-
-        if (isIncremental)
-        {
-            foreach (var element in array)
-            {
-                if (array[pivot].CompareTo(element) >= 0 )
-                {
-                    rightSide.Add(element);
-                }
-                else
-                {
-                    leftSide.Add(element);
-                }
-            }
-        }
-        else
-        {
-            foreach (var element in array)
-            {
-                if (array[pivot].CompareTo(element) < 0 )
-                {
-                    rightSide.Add(element);
-                }
-                else
-                {
-                    leftSide.Add(element);
-                }
-            }
-        }
-
-        var rs = rightSide.ToArray();
-        var ls = leftSide.ToArray();
+        if (start >= end) return;
         
-        Sort(ref rs, isIncremental, pivot == 0 ? rs.Length - 1 : 0);
-        Sort(ref ls, isIncremental, pivot == 0 ? ls.Length - 1 : 0);
-
-        Merge(ref array, rightSide, leftSide);
+        LemutoPart(array, isIncremental, out var pivotPos, start, end);
+        
+        Sort(ref array, isIncremental, start, pivotPos - 1);
+        Sort(ref array, isIncremental, pivotPos + 1, end);
     }
 
-    private static void Merge(ref T[] array, List<T> rightSide, List<T> leftSide)
+    private static void LemutoPart(T[] array, bool isIncremental, out int pivotPos,in int start, in int end)
     {
-        for (var i = 0; i < leftSide.Count; i++)
+        var j = start - 1;
+        for (var i = start; i < end; i++)
         {
-            array[i] = leftSide[i];
+            if (ISortable<T>.IsOrdered(array[end], array[i], isIncremental)) continue;
+
+            j++;
+            ISortable<T>.Swap(array, i, j);
         }
 
-        for (var i = 0; i < rightSide.Count; i++)
-        {
-            array[i + leftSide.Count] = rightSide[i];
-        }
+        ISortable<T>.Swap(array, end, j + 1);
+
+        pivotPos = j + 1;
     }
 }
